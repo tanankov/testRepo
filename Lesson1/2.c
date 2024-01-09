@@ -26,14 +26,7 @@
 
 int main(int argc, char **argv)
 {
-	printf("Hello world\n\n");
 	printf("	Let's\n	  go\n	    to walk\n\n");
-	printf("     *\n");
-	printf("    ***\n");
-	printf("   *****\n");
-	printf("  *******\n");
-	printf("   HH HH\n");
-	printf("   ZZZZZ\n");
 
 
 	return 0;
