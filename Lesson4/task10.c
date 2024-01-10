@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * task1.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,22 +23,46 @@
 
 
 #include <stdio.h>
-#include <math.h>
 
 int main(int argc, char **argv)
 {
-	int num; 
-	int mult; 
-	printf("Input 3-digit number:\n"); 
+	int num;
+	printf("Input number:\n"); 
 	int state = scanf_s("%d", &num);
-	if (state != 1){ //not all fields filled
-		printf("These arent number, try again\n"); 
+	if ((state != 1) || (num < 1) || (num > 12)){//not all fields filled or number is not valid
+		printf("This isnt valid number, try again\n"); 
 		return 0;
 	} 
-	num = abs(num);
-	mult = (num/100) * ((num%100)/10) * (num%10) ;
-	printf("%d\n", mult); 
-
+	switch (num){
+		case 1:
+		case 2:
+		case 12:
+		{
+			printf("Winter");
+			break;
+		}
+		case 3:
+		case 4:
+		case 5:
+		{
+			printf("Spring");
+			break;
+		}
+		case 6:
+		case 7:
+		case 8:
+		{
+			printf("Summer");
+			break;
+		}
+		case 9:
+		case 10:
+		case 11:
+		{
+			printf("Autumn");
+			break;
+		}
+	}
 	return 0;
 }
 

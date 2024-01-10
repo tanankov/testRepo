@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * task1.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,22 +23,21 @@
 
 
 #include <stdio.h>
-#include <math.h>
 
 int main(int argc, char **argv)
 {
-	int num; 
-	int mult; 
-	printf("Input 3-digit number:\n"); 
-	int state = scanf_s("%d", &num);
-	if (state != 1){ //not all fields filled
-		printf("These arent number, try again\n"); 
+	int num[5], min; 
+	printf("Input 5 numbers:\n"); 
+	int state = scanf_s("%d%d%d%d%d", &num[0],&num[1],&num[2],&num[3],&num[4]);
+	if (state != 5){//not all fields filled
+		printf("These arent numbers, try again\n"); 
 		return 0;
 	} 
-	num = abs(num);
-	mult = (num/100) * ((num%100)/10) * (num%10) ;
-	printf("%d\n", mult); 
-
+	min = num[0];
+	for (int i = 1; i<5; i++){
+		if (min > num[i]) min = num[i];
+	}
+	printf("%d", min); 
 	return 0;
 }
 

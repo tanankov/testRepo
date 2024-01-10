@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * task1.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -21,24 +21,23 @@
  * 
  */
 
-
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 
 int main(int argc, char **argv)
 {
-	int num; 
-	int mult; 
-	printf("Input 3-digit number:\n"); 
+	int num, maxDigit; 
+	printf("Input number:\n"); 
 	int state = scanf_s("%d", &num);
-	if (state != 1){ //not all fields filled
-		printf("These arent number, try again\n"); 
+	if (state != 1){//not all fields filled
+		printf("These isnt number, try again\n"); 
 		return 0;
 	} 
 	num = abs(num);
-	mult = (num/100) * ((num%100)/10) * (num%10) ;
-	printf("%d\n", mult); 
-
+	maxDigit = num % 10;
+	if ((num%100)/10 > maxDigit) maxDigit = (num%100)/10;
+	if (num/100 > maxDigit) maxDigit = num/100;
+	printf("%d", maxDigit); 
 	return 0;
 }
 

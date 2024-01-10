@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * task1.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -21,24 +21,30 @@
  * 
  */
 
-
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 
 int main(int argc, char **argv)
 {
-	int num; 
-	int mult; 
-	printf("Input 3-digit number:\n"); 
-	int state = scanf_s("%d", &num);
-	if (state != 1){ //not all fields filled
-		printf("These arent number, try again\n"); 
-		return 0;
-	} 
-	num = abs(num);
-	mult = (num/100) * ((num%100)/10) * (num%10) ;
-	printf("%d\n", mult); 
-
+	int x1, y1, x2, y2;
+	float k, b; 
+	printf("Input 2 dots coord.(ex. x1 y1 x2 y2):\n"); 
+	int state = scanf_s("%d%d%d%d", &x1, &y1, &x2, &y2);
+	if (state < 4){ // scan unsuccessful
+		printf("Invalid numbers were entered, please try again");
+		return 1;
+	}
+	if (x1 > x2) { //swap dots if reverse order
+		int buf = x1;
+		x1 = x2;
+		x2 = buf;
+		buf = y1;
+		y1 = y2;
+		y2 = buf;
+	}
+	k = (float)(y2 - y1) / (float)(x2 - x1);
+	b = (float)y1 - k * (float)x1;
+	printf("%.2f %.2f", k, b);
 	return 0;
 }
 
