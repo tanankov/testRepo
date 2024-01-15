@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * tsakC5.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,20 +23,34 @@
 
 
 #include <stdio.h>
+#include <math.h>
+#include <limits.h>
+
+int commonDivider (int num1, int num2);
 
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
-	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
-		return 0;
-	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	int a,b;
+	printf("Input 2 numbers:\n"); 
+	int stat = scanf_s("%d%d", &a, &b);
+	if (stat < 2){
+		printf("Non valid numbers, try again\n"); 
+		return 1;
+	}
+	
+	printf("%d", commonDivider(a, b));
 	return 0;
+}
+
+int commonDivider (int num1, int num2){
+	int i;
+	if (num1>num2){
+		int buf = num1;
+		num1 = num2;
+		num2 = buf;
+	}
+	for (i = num1; i>1; i--){
+		if ((num1%i == 0) && (num2%i == 0)) break;}
+	return i;
 }
 

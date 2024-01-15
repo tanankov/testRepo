@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * tsakC5.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,20 +23,35 @@
 
 
 #include <stdio.h>
+#include <math.h>
+#include <limits.h>
+#define MAX_NUMBERS 100
+
+int func (int arg);
 
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
+	int argArr[MAX_NUMBERS], i=0, maxVal;
 	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
-		return 0;
-	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	while(i<MAX_NUMBERS){		
+		int stat = scanf_s("%d", &argArr[i]);
+		if (stat < 1){
+			printf("Non valid number, try again\n"); 
+			return 1;
+		}
+		if (argArr[i] == 0) break;
+		i++;
+	}
+	maxVal = func(argArr[0]);
+	for (int j = 1; j<=i; j++)
+		if (maxVal < func(argArr[j])) maxVal = func(argArr[j]);
+	printf("%d", maxVal);
 	return 0;
+}
+
+int func (int arg){
+	if (arg < -2) return -4;
+	else if (arg < 2) return arg*arg;
+	else return arg*arg + 4*arg + 5;
 }
 

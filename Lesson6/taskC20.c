@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * tsakC5.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,20 +23,34 @@
 
 
 #include <stdio.h>
+#include <string.h>
+
+#define MAX_CHARS 1000
+
+int checkString (char *string);
 
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
-	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
-		return 0;
-	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	char string[MAX_CHARS];
+	printf("Input string:\n"); 
+	int stat = scanf_s("%s", string);
+	if (stat < 1){
+		printf("Non valid string, try again\n"); 
+		return 1;
+	}
+	if (checkString(string)) printf("YES");
+	else printf("NO");
 	return 0;
+}
+
+int checkString (char *string){
+	int count = 0;
+	for(int i = 0; i<strlen(string); i++){
+		if (string[i] == '(') count++;
+		else if (string[i] == ')') count--;
+		if (count < 0) return 0; 
+	}
+	if (count == 0) return 1;
+	else return 0;
 }
 

@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * tsakC5.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -24,19 +24,27 @@
 
 #include <stdio.h>
 
+int sumNumber (int num);
+
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
-	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
-		return 0;
-	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	int number;
+	printf("Input number:\n"); 
+	int stat = scanf_s("%d", &number);
+	if (stat < 1){
+		printf("Non numeric symbols were entered, try again\n"); 
+		return 1;
+	}
+	printf("%d", sumNumber(number));
 	return 0;
+}
+
+int sumNumber (int num){
+	int sum = 0;
+	while (num>0){
+		sum += num;
+		num--;
+	}
+	return sum;
 }
 

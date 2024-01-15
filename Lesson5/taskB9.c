@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * task1.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,20 +23,27 @@
 
 
 #include <stdio.h>
+#include <math.h>
+#define NUM_LENGTH 6
 
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
-	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
-		return 0;
-	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	char num[NUM_LENGTH] = {0}; 
+	int stat = 1;
+	printf("Input number:\n"); 
+	scanf_s("%s", num);
+	for (int i = 0; i < NUM_LENGTH; i++){
+		if (((num[i] < 48) || (num[i] > 57)) && (num[i] != 0)) { // check if symbol is numeric and non empty
+			printf("Non numeric symbol was entered, try again\n"); 
+			return 0;
+		}
+		if (num[i]%2 > 0){
+			stat = 0;
+			break;
+		}
+	}
+	if (stat == 1) printf("YES");
+	else printf("NO");
 	return 0;
 }
 

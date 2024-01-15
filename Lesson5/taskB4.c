@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * task1.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,20 +23,19 @@
 
 
 #include <stdio.h>
+#include <math.h>
 
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
-	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
+	int a; 
+	printf("Input 3-digit number:\n"); 
+	int state = scanf_s("%d", &a);
+	if (state != 1){//not all fields filled or number is not valid
+		printf("These arent valid numbers, try again\n"); 
 		return 0;
 	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	if ((a/1000 == 0) && (a / 100 > 0)) printf("YES");
+	else printf("NO");
 	return 0;
 }
 

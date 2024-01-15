@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * task1.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,20 +23,39 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#define NUM_LENGTH 6
+
+int checkNumber(int number);
 
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
-	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
+	int num; 
+	int luckyNum = 10;
+	printf("Input number:\n"); 
+	int stat = scanf_s("%d", &num);
+	if ((stat == 0) || (num < 10))  { // check if symbol is numeric and non empty
+		printf("Non numeric symbol was entered or number less than 10, try again\n"); 
 		return 0;
-	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	}
+	while (num > luckyNum)
+	{
+		if (checkNumber(luckyNum)) printf("%d \n",luckyNum);
+		luckyNum++;
+	}
 	return 0;
+}
+
+int checkNumber(int number){ //if lucky return 1 else 0
+	int mult = 1, sum = 0;
+	do{
+		sum += number%10;
+		mult *= number%10;
+		number /= 10; 
+	} while(number > 0);
+	if (sum == mult) return 1;
+	else return 0;
 }
 

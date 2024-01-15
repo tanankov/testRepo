@@ -1,5 +1,5 @@
 /*
- * 1.c
+ * tsakC5.c
  * 
  * Copyright 2024 tanan <tanan@KREMLEBOT>
  * 
@@ -23,20 +23,30 @@
 
 
 #include <stdio.h>
+#include <math.h>
+#include <limits.h>
+
+double riceNumber (int siteNum);
 
 int main(int argc, char **argv)
 {
-	int a, b, c; 
-	float median; // to prevent overflow
-	printf("Input numbers:\n"); 
-	int state = scanf_s("%d%d%d", &a, &b, &c);
-	if (state != 3){ //not all fields filled
-		printf("These arent numbers, try again\n"); 
-		return 0;
-	} 
-	median = (float)(a + b + c)/3;
-	printf("%.2f\n", median); 
-
+	int number;
+	printf("Input site number (1..64):\n"); 
+	int stat = scanf_s("%d", &number);
+	if ((stat < 1) || (number > 64) || (number < 0)){
+		printf("Non valid number, try again\n"); 
+		return 1;
+	}
+	printf("%.0lf", riceNumber(number));
 	return 0;
+}
+
+double riceNumber (int siteNum){
+	double res = 1;
+	while (siteNum > 1) {
+		res *= (double)2;
+		siteNum--;
+	}
+	return res;
 }
 
