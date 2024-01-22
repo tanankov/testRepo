@@ -23,26 +23,38 @@
 
 
 #include <stdio.h>
+#include <limits.h>
 #include <math.h>
 
 int recurs_power(int n, int p);
 
 int main(int argc, char **argv)
 {
-	int num, exp;
-	printf("Input number and exponent values (number -100..100, exponent 0.100):\n"); 
+	int num, exp, res;
+	printf("Input non-negative number and exponent values:\n"); 
 	int stat = scanf("%d%d", &num, &exp);
-	if ((stat < 2)||(num < -100)||(num>100)||(exp<0)||(exp>100)){
+	if ((stat < 2) || (num < 0) || (exp < 0)){
 		printf("Values are not valid. Try again");
 		return -1;
 	}
-	printf("%d", recurs_power(num, exp));
+	res = recurs_power(num, exp);
+	if (res != -1)
+		printf("%d", res);
+	else
+		printf("Result value bigger than INT_MAX. Try again");
 }
 
 int recurs_power(int n, int p)
 {
+	int buf;
 	if (p > 0)
-		return n * recurs_power(n, p-1);
+	{
+		buf = recurs_power(n, p-1);
+		if ((INT_MAX / buf > n) && (buf != -1)) // integer overflow check
+			return n * buf;
+		else
+			return -1;
+	}
 	else 
 		return 1;
 }
