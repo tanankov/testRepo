@@ -23,7 +23,7 @@ unsigned int DateToInt(tempStorage_t * info)
     return ((getYearVal(info->year) << 16) | (getMonthVal(info->month) << 8) | (getMonthVal(info->day)));
 }
 
-void cgangeIJ(tempStorage_t* info,int i,int j)
+void cgangeIJ(tempStorage_t * info,int i,int j)
 {
     tempStorage_t temp;
     temp=info[i];
@@ -204,7 +204,6 @@ int processLine(char line[], tempStorage_t * storage, int month)
     int cnt = 0, itemCnt = 0, i = 0, itemSize;
     char c;
     while ((c = line[cnt++]) != '\n'){ // until end of line
-        // printf("%c\n", c);
 
         if (c == CSV_DELIMITER){
             if (i < itemSize){ // item too short
@@ -212,14 +211,9 @@ int processLine(char line[], tempStorage_t * storage, int month)
             }
             if (itemCnt == 1){ //check for month validity
                 if ((month > 0) && (month != getMonthVal(storage->month))){
-                    // printf("not used %d\n", getMonthVal(storage->month));
                     return 2; // line will not be used for statistics
                 } 
             }
-            // for(int j = 0; j<4;j++){
-            //     printf("%d ", storage->year[i]);
-            // }
-            // printf("\n");
             itemCnt++;
             i = 0;
         }
@@ -232,15 +226,14 @@ int processLine(char line[], tempStorage_t * storage, int month)
                     if (NumberCheck(c)){
                         if (i < itemSize){
                             storage->year[i++] = c - '0';
-                            // printf("%d ", storage->year[i-1]);
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
                     else {
-                        printf("Invalid symbol\n");
+                        // printf("Invalid symbol\n");
                         return 1; // item has invalid symbol                    
                     }
                     break;
@@ -253,12 +246,12 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->month[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
                     else {
-                        printf("Invalid symbol\n");
+                        // printf("Invalid symbol\n");
                         return 1; // item has invalid symbol                    
                     }
                     break;
@@ -271,12 +264,12 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->day[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
                     else {
-                        printf("Invalid symbol\n");
+                        // printf("Invalid symbol\n");
                         return 1; // item has invalid symbol                    
                     }
                     break;
@@ -289,12 +282,12 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->hour[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
                     else {
-                        printf("Invalid symbol\n");
+                        // printf("Invalid symbol\n");
                         return 1; // item has invalid symbol                    
                     }
                     break;
@@ -307,12 +300,12 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->minute[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
                     else {
-                        printf("Invalid symbol\n");
+                        // printf("Invalid symbol\n");
                         return 1; // item has invalid symbol                    
                     }
                     break;
@@ -332,7 +325,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->temp = 0;
                         }
                         else {
-                            printf("Invalid symbol\n");
+                            // printf("Invalid symbol\n");
                             return 1; // item has invalid symbol                    
                         }
                         
@@ -344,12 +337,12 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             i++;
                         }
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
                     else {
-                        printf("Invalid symbol\n");
+                        // printf("Invalid symbol\n");
                         return 1; // item has invalid symbol
 
                     }
@@ -357,7 +350,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                 }
                 default:
                 {
-                    printf("Too much items");
+                    // printf("Too much items");
                     return 1; // more items than needed
                 }
             }
@@ -366,9 +359,8 @@ int processLine(char line[], tempStorage_t * storage, int month)
         
 	}
     storage->temp *= sign;
-    // printf("%d\n", storage.temp);
     if(itemCnt < ITEM_NUM - 1){ // last item doesnt have delimiter, so -1{
-        printf("Not enough items");
+        // printf("Not enough items");
         return 1; // not all items are filled
     }
     else{
@@ -376,14 +368,14 @@ int processLine(char line[], tempStorage_t * storage, int month)
     }
 }
 
-void addStructItem(tempStorage_t * storage, tempStorage_t item)
+void addStructItem(tempStorage_t * storage, tempStorage_t * item)
 {
-    memcpy(storage->year, item.year, sizeof(item.year)); 
-    memcpy(storage->month, item.month, sizeof(item.month));
-    memcpy(storage->day, item.day, sizeof(item.day));
-    memcpy(storage->hour, item.hour, sizeof(item.hour));
-    memcpy(storage->minute, item.minute, sizeof(item.minute));
-    storage->temp = item.temp;
+    memcpy(storage->year, item->year, sizeof(item->year)); 
+    memcpy(storage->month, item->month, sizeof(item->month));
+    memcpy(storage->day, item->day, sizeof(item->day));
+    memcpy(storage->hour, item->hour, sizeof(item->hour));
+    memcpy(storage->minute, item->minute, sizeof(item->minute));
+    storage->temp = item->temp;
 }
 
 void printStat(tempStorage_t storage[], int storageLen, int selectedMonth)

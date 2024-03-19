@@ -67,7 +67,7 @@ int main(int argc, char **argv){
             case 0: // line is valid and useful
             {
                 if (itemCnt < MAX_RECORDS_NUM){
-                    addStructItem(tempStorage + (itemCnt++), lineBuf);
+                    addStructItem(tempStorage + (itemCnt++), &lineBuf);
                 }
                 else{
                     printf("Max value of temperature records (%d) was exceeded.\nUnprocessed data may not be used.\n");
@@ -95,7 +95,7 @@ int main(int argc, char **argv){
     SortByDate((tempStorage_t *)tempStorage, itemCnt);
     
     // Printing stat
-    printStat(tempStorage, itemCnt, selMonthNum);
+    printStat((tempStorage_t *)tempStorage, itemCnt, selMonthNum);
     
 
 }
