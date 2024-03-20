@@ -422,3 +422,48 @@ void printStat(tempStorage_t storage[], int storageLen, int selectedMonth)
         }
     }
 }
+
+void printStatToFile(FILE *file, tempStorage_t storage[], int storageLen, int selectedMonth)
+{
+    int curYear = 0;
+    int curMon = 0;
+    if (selectedMonth > 0){ // print for specific month
+        for (int i = 0; i<storageLen; i++){
+            int mn = getMonthVal(storage[i].month);
+            int yr = getYearVal(storage[i].year);
+            if ((curMon != mn) && (curYear != yr)){
+                char monName[9];
+                getMonthName(monName, mn);
+                fprintf(file, "%s %d:\n", monName, yr);
+                fprintf(file,"    median temperature: %.1f\n", getMonthMeanTemp(storage, storageLen, mn, yr));
+                fprintf(file,"    minimum temperature: %d\n", getMonthMinTemp(storage, storageLen, mn, yr));
+                fprintf(file,"    maximum temperature: %d\n\n", getMonthMaxTemp(storage, storageLen, mn, yr));
+                curMon = mn;
+                curYear = yr;
+            }
+        }
+    }
+    else { // print by default
+        for (int i = 0; i<storageLen; i++){
+            int mn = getMonthVal(storage[i].month);
+            int yr = getYearVal(storage[i].year);
+            if (curYear != yr){
+                fprintf(file,"%d:\n", yr);
+                fprintf(file,"    yearly median temperature: %.1f\n", getYearMeanTemp(storage, storageLen, yr));
+                fprintf(file,"    yearly minimum temperature: %d\n", getYearMinTemp(storage, storageLen, yr));
+                fprintf(file,"    yearly maximum temperature: %d\n\n", getYearMaxTemp(storage, storageLen, yr));
+                curYear = yr;
+                curMon = 0;
+            }
+            if ((curMon != mn)){
+                char monName[9];
+                getMonthName(monName, mn);
+                fprintf(file,"%s %d:\n", monName, yr);
+                fprintf(file,"    median temperature: %.1f\n", getMonthMeanTemp(storage, storageLen, mn, yr));
+                fprintf(file,"    minimum temperature: %d\n", getMonthMinTemp(storage, storageLen, mn, yr));
+                fprintf(file,"    maximum temperature: %d\n\n", getMonthMaxTemp(storage, storageLen, mn, yr));
+                curMon = mn;
+            }
+        }
+    }
+}

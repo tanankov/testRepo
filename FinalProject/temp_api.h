@@ -34,6 +34,7 @@ int getYearMaxTemp(tempStorage_t storage[], int storLen, int year);
 int processLine(char line[], tempStorage_t * storage, int month);
 void addStructItem(tempStorage_t * storage, tempStorage_t * item);
 void printStat(tempStorage_t storage[], int storageLen, int selectedMonth);
+void printStatToFile(FILE *file, tempStorage_t storage[], int storageLen, int selectedMonth);
 
 
 #endif

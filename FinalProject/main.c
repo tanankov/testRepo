@@ -1,9 +1,10 @@
 
 #include "temp_api.h"
 
-#define MAX_RECORDS_NUM 100
-#define MAX_PATH_SIZE 100
+#define MAX_RECORDS_NUM 500
+#define MAX_PATH_SIZE 255
 #define FILE_LINE_LENGTH 25
+#define MAX_NAME_SIZE 20
 
 
 int main(int argc, char **argv){
@@ -11,10 +12,11 @@ int main(int argc, char **argv){
     opterr=0;
     char filePath [MAX_PATH_SIZE] = "";
     int selMonthNum = 0;
+    char resFileName [MAX_NAME_SIZE] = "";
     printf("Welcome to temperature statistic analyzer v0.1!\n\n"); 
 
     // Parse options
-    while ( (rez = getopt(argc,argv,"hf:m:")) != -1){
+    while ( (rez = getopt(argc,argv,"hf:m:s:")) != -1){
         switch (rez){
             case 'h': {
                 printf("Script function:\n"); 
@@ -22,7 +24,7 @@ int main(int argc, char **argv){
                 printf("Avaliable options:\n"); 
                 printf("-f <FILEPATH> - input file for analisys (mandatory option);\n"); 
                 printf("-m <MONTHNUM> - print statistics only for one month each year (1 - Jan, 2 -Feb ... 12 - Dec)\n");
-                printf("-s <FILENAME> - save results\n");  // TODO
+                printf("-s <FILENAME> - save results in file <FILENAME>.txt\n");
                 return 0;
             }
             case 'f': {
@@ -40,6 +42,13 @@ int main(int argc, char **argv){
                     printf("Invalid month selected!\nStatistics will be shown for every month\n\n");
                     //return 1;
                 }
+                break;
+            }
+            case 's':
+            {
+                memcpy(resFileName, optarg, sizeof(optarg));
+                strcat(resFileName, ".txt");
+                printf("Statistics will be saved to file %s\n", resFileName);
                 break;
             }
             case '?': {
@@ -95,7 +104,14 @@ int main(int argc, char **argv){
     SortByDate((tempStorage_t *)tempStorage, itemCnt);
     
     // Printing stat
-    printStat((tempStorage_t *)tempStorage, itemCnt, selMonthNum);
+    if (strcmp(resFileName, "") == 1)
+        printStat((tempStorage_t *)tempStorage, itemCnt, selMonthNum);
+    else{
+        FILE *resultFile;
+        resultFile = fopen(resFileName,"w");
+        printStatToFile(resultFile,(tempStorage_t *)tempStorage, itemCnt, selMonthNum);
+    }
+        
     
 
 }
