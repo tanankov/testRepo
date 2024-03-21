@@ -231,7 +231,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->year[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -249,7 +249,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->month[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -267,7 +267,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->day[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -285,7 +285,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->hour[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -303,7 +303,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->minute[i++] = c - '0';
                         }  
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -340,7 +340,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             i++;
                         }
                         else{
-                            printf("Oversize\n");
+                            // printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -353,7 +353,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                 }
                 default:
                 {
-                    printf("Too much items");
+                    // printf("Too much items");
                     return 1; // more items than needed
                 }
             }
