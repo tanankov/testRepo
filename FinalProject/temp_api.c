@@ -203,7 +203,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
     int temp = 0, sign = 0;
     int cnt = 0, itemCnt = 0, i = 0, itemSize;
     char c;
-    while ((c = line[cnt++]) != '\n'){ // until end of line
+    while (((c = line[cnt]) != '\n') && ((c = line[cnt]) != '\0')){ // until end of line
 
         if (c == CSV_DELIMITER){
             if (i < itemSize){ // item too short
@@ -218,6 +218,9 @@ int processLine(char line[], tempStorage_t * storage, int month)
             i = 0;
         }
         else{
+            if (c == ' '){
+                c = '0';
+            }
             switch(itemCnt)
             {
                 case 0: //year
@@ -228,7 +231,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->year[i++] = c - '0';
                         }  
                         else{
-                            // printf("Oversize\n");
+                            printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -246,7 +249,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->month[i++] = c - '0';
                         }  
                         else{
-                            // printf("Oversize\n");
+                            printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -264,7 +267,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->day[i++] = c - '0';
                         }  
                         else{
-                            // printf("Oversize\n");
+                            printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -282,7 +285,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->hour[i++] = c - '0';
                         }  
                         else{
-                            // printf("Oversize\n");
+                            printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -300,7 +303,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             storage->minute[i++] = c - '0';
                         }  
                         else{
-                            // printf("Oversize\n");
+                            printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -337,7 +340,7 @@ int processLine(char line[], tempStorage_t * storage, int month)
                             i++;
                         }
                         else{
-                            // printf("Oversize\n");
+                            printf("Oversize\n");
                             return 1; // item too long
                         }
                     }
@@ -350,13 +353,13 @@ int processLine(char line[], tempStorage_t * storage, int month)
                 }
                 default:
                 {
-                    // printf("Too much items");
+                    printf("Too much items");
                     return 1; // more items than needed
                 }
             }
         }
         
-        
+    cnt++;
 	}
     storage->temp *= sign;
     if(itemCnt < ITEM_NUM - 1){ // last item doesnt have delimiter, so -1{

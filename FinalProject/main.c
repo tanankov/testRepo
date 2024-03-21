@@ -1,7 +1,7 @@
 
 #include "temp_api.h"
 
-#define MAX_RECORDS_NUM 500
+#define MAX_RECORDS_NUM 10000
 #define MAX_PATH_SIZE 255
 #define FILE_LINE_LENGTH 25
 #define MAX_NAME_SIZE 20
@@ -16,6 +16,10 @@ int main(int argc, char **argv){
     printf("Welcome to temperature statistic analyzer v0.1!\n\n"); 
 
     // Parse options
+    if(argc <= 1){
+        printf("Try '-h' to get avaliable setup options.\n");
+        return 0;
+    }
     while ( (rez = getopt(argc,argv,"hf:m:s:")) != -1){
         switch (rez){
             case 'h': {
@@ -28,7 +32,7 @@ int main(int argc, char **argv){
                 return 0;
             }
             case 'f': {
-                memcpy(filePath, optarg, sizeof(optarg));
+                memcpy(filePath, optarg, sizeof(filePath));
                 break;
             }
             case 'm': {
@@ -46,7 +50,7 @@ int main(int argc, char **argv){
             }
             case 's':
             {
-                memcpy(resFileName, optarg, sizeof(optarg));
+                memcpy(resFileName, optarg, sizeof(resFileName));
                 strcat(resFileName, ".txt");
                 printf("Statistics will be saved to file %s\n", resFileName);
                 break;
@@ -59,6 +63,9 @@ int main(int argc, char **argv){
     }
 
     // Parse the file
+    if (filePath[0] == '\0'){
+        printf("No input file was chosen, choose filename (-f <FILENAME>)");
+    }
     FILE *inputFile;
     if((inputFile = fopen(filePath, "r")) == NULL)
     {
@@ -75,21 +82,20 @@ int main(int argc, char **argv){
         switch (processLine(line, &lineBuf, selMonthNum)){
             case 0: // line is valid and useful
             {
-                if (itemCnt < MAX_RECORDS_NUM){
-                    addStructItem(tempStorage + (itemCnt++), &lineBuf);
-                }
-                else{
-                    printf("Max value of temperature records (%d) was exceeded.\nUnprocessed data may not be used.\n");
+                addStructItem(tempStorage + (itemCnt++), &lineBuf);
+                if (itemCnt >= MAX_RECORDS_NUM){
+                    printf("Max value of temperature records (%d) was exceeded.\nUnprocessed data may not be used.\n", MAX_RECORDS_NUM); 
                 }
                 break;
             }
             case 1: // line is invalid 
             {
-                printf("Line %d has invalid format. Skipping...\n", lineCnt);
+                printf("Line %d has invalid format. Skipping...\n", lineCnt + 1);
                 break;
             }
             case 2: // line is valid but not used
                 //ignore
+
         }
         lineCnt++;
     }
@@ -98,14 +104,14 @@ int main(int argc, char **argv){
         printf("Input file does not have any usable data or data in specified range.\nTry to use different range or different file.");
         return 1;
     }
-
     // ------Info processing-------
     // Sort array by date
     SortByDate((tempStorage_t *)tempStorage, itemCnt);
     
     // Printing stat
-    if (strcmp(resFileName, "") == 1)
+    if (resFileName[0] == '\0'){
         printStat((tempStorage_t *)tempStorage, itemCnt, selMonthNum);
+    }
     else{
         FILE *resultFile;
         resultFile = fopen(resFileName,"w");
